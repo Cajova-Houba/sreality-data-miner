@@ -1,5 +1,6 @@
 ---
 - hosts: main
   name: Install server
+  become: true
   roles:
     - role: install-server

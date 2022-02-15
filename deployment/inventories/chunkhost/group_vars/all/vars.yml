@@ -10,3 +10,20 @@ users:
 ansible_user: ansible
 ansible_user_password: "{{ vault_ansible_user_password }}"
 ansible_become_password: "{{ ansible_user_password }}"
+
+mariadb_databases:
+  - name: sreality
+    collation: utf8_general_ci
+    encoding: utf8
+
+mariadb_users:
+  - name: root
+    host: localhost
+    password: "{{ vault_root_db_password }}"
+    priv: "*.*:ALL"
+    state: present
+  - name: sreality
+    host: localhost
+    password: "{{ vault_sreality_db_password }}"
+    priv: "sreality.*:ALL"
+    state: present

@@ -1,0 +1,11 @@
+---
+sdkman_update: true
+sdkman_install_packages:
+ - { candidate: java, version: 17.0.2-open }
+sdkman_update_alternatives:
+ - candidate: java
+   name: java
+   link: /usr/bin/java
+ - candidate: java
+   name: javac
+   link: /usr/bin/javac

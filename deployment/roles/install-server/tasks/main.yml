@@ -1,7 +1,14 @@
 ---
+- name: Install server | Install Python 3
+  apt:
+    name: python3
+    state: present
 
 - name: Install server | Install MariaDB
+  include_role:
+    name: fauust.mariadb 
 
-- name: Install server | Install Java 11
-
-- name: Install server | Install Python
+- name: Install server | Install Java 17 using sdkman
+  include_role:
+    name: Comcast.sdkman
+    
