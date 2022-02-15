@@ -1,0 +1,12 @@
+---
+users:
+  - username: ansible
+    name: Ansible User
+    groups: ['wheel']
+    password: "{{ ansible_user_password | password_hash('sha512', 65534 | random(seed=inventory_hostname) | string) }}"
+    ssh_key:
+      - "ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAFqzR74qW6xwDvrfsKRSArsTs8x5lggJdoiGxZoPwRrOA7TTiAWPpRnQxc7D4GdAxFB4Ib15fGYJjXK/dlm+JrRKAEvOZEDe9as+txTjnTR2RjXhKDehm3/Jk00l+ccLB5/ShhxfYLJUP4klG0tpxrjIOxI/zUAEkWBoyGroROJLBXRTA== zdenda@DESKTOP-57CF8IG"
+
+ansible_user: ansible
+ansible_user_password: "{{ vault_ansible_user_password }}"
+ansible_become_password: "{{ ansible_user_password }}"

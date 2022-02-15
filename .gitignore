@@ -1,0 +1,4 @@
+deployment/ansible_id_rsa
+deployment/pwd_env
+.gitsecret/keys/random_seed
+!*.secret

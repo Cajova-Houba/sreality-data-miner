@@ -1,0 +1,7 @@
+---
+
+- name: Install server | Install MariaDB
+
+- name: Install server | Install Java 11
+
+- name: Install server | Install Python

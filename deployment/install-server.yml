@@ -1,3 +1,5 @@
 ---
 - hosts: main
-  # todo
+  name: Install server
+  roles:
+    - role: install-server

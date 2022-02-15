@@ -1,0 +1,22 @@
+---
+- name: run ansible galaxy
+  local_action: command ansible-galaxy install -r roles/requirements.yml
+  run_once: true
+  changed_when: false
+
+- name: Create Ansible User
+  include_role:
+    name: singleplatform-eng.users
+  vars:
+    ansible_become: yes
+  when: "'localhost' != inventory_hostname"
+
+- name: Allow 'wheel' group to have passwordless sudo
+  become: yes
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%wheel'
+    line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+    validate: visudo -cf %s
+
