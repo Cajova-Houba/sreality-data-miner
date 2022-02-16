@@ -4,11 +4,23 @@
     name: python3
     state: present
 
-- name: Install server | Install MariaDB
+- name: Install server | Install Mysql
   include_role:
-    name: fauust.mariadb 
+    name: idealista.mysql_role
 
-- name: Install server | Install Java 17 using sdkman
-  include_role:
-    name: Comcast.sdkman
-    
+- name: Install server | Create Java dir
+  file:
+    state: directory
+    path: "{{ java_base }}"
+
+- name: Install server | Install Java 17 
+  become: true
+  unarchive:
+    src: https://download.java.net/java/GA/jdk17/0d483333a00540d886896bac774ff48b/35/GPL/openjdk-17_linux-x64_bin.tar.gz
+    dest: "{{ java_base }}"
+    remote_src: yes
+
+- name: Install server | Set java home 
+  template:
+    src: java_home.sh.j2
+    dest: /etc/profile.d/java_home.sh

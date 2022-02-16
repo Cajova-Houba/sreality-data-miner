@@ -16,14 +16,11 @@ mariadb_databases:
     collation: utf8_general_ci
     encoding: utf8
 
+mysql_root_user: "root"
+mysql_root_password: "{{ vault_root_db_password }}"
 mariadb_users:
-  - name: root
-    host: localhost
-    password: "{{ vault_root_db_password }}"
-    priv: "*.*:ALL"
-    state: present
   - name: sreality
     host: localhost
     password: "{{ vault_sreality_db_password }}"
-    priv: "sreality.*:ALL"
+    priv: [ "sreality.*:ALL" ]
     state: present

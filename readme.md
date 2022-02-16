@@ -14,6 +14,7 @@ Scripts to pull data from sreality.cz and store them in DB.
  - git secret hide
 
 ## Reveal files
+ - gpg --import <key>
  - git secret reveal
 
 # Installing server
