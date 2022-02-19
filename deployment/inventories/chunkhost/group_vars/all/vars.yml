@@ -24,3 +24,6 @@ mariadb_users:
     password: "{{ vault_sreality_db_password }}"
     priv: [ "sreality.*:ALL" ]
     state: present
+
+crawler_user_username: "sreality_crawler"
+crawler_user_password: "{{ vault_crawler_user_password }}"

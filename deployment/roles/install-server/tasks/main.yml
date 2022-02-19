@@ -4,9 +4,17 @@
     name: python3
     state: present
 
-- name: Install server | Install Mysql
-  include_role:
-    name: idealista.mysql_role
+- name: Install server | Install Pip 3
+  apt:
+    name: python3-pip
+
+- name: Install server | Install python packages using pip
+  shell:
+    cmd: "pip3 install pipenv"
+
+# - name: Install server | Install Mysql
+#   include_role:
+#     name: idealista.mysql_role
 
 - name: Install server | Create Java dir
   file:

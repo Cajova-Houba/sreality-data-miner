@@ -1,0 +1,50 @@
+---
+- name: Deploy crawler | Create group
+  group:
+    name: "{{ crawler_user_username }}"
+    state: present
+
+- name: Deploy crawler | Create user
+  user:
+    name: "{{ crawler_user_username }}"
+    group: "{{ crawler_user_username }}"
+    home: "{{ crawler_user_home }}"
+
+- name: Deploy crawler | Remove app dir
+  file:
+    path: "{{ crawler_app_dir }}"
+    state: absent
+
+- name: Deploy crawler | Create app dir
+  file:
+    path: "{{ crawler_app_dir }}"
+    group: "{{ crawler_user_username }}"
+    owner: "{{ crawler_user_username }}"
+    state: directory
+
+- name: Deploy crawler | Copy code
+  copy:
+    src: "../src"
+    dest: "{{ crawler_app_dir }}"
+    owner: "{{ crawler_user_username }}"
+    group: "{{ crawler_user_username }}"
+
+- name: Deploy crawler | Copy migration scripts
+  copy:
+    src: "../migration"
+    dest: "{{ crawler_app_dir }}"
+    owner: "{{ crawler_user_username }}"
+    group: "{{ crawler_user_username }}"
+
+- name: Deploy crawler | Install python packages
+  shell:
+    cmd: pip3 install selenium beautifulsoup4
+
+- name: Deploy crawler | Configure cron for crawler
+  cron:
+    name: "Sreality crawler"  
+    minute: "*"
+    hour: "*"
+    job: "python3 {{ crawler_app_dir }}/src/main.py"
+    user: "{{ crawler_user_username }}"
+

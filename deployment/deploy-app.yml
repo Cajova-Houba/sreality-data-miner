@@ -1,0 +1,5 @@
+---
+- hosts: main
+  roles:
+    - role: deploy-crawler
+      become: true
