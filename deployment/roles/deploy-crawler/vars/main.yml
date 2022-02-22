@@ -2,3 +2,7 @@
 
 crawler_user_home: "/home/{{ crawler_user_username }}"
 crawler_app_dir: "/opt/sreality_crawler"
+required_pip_packages:
+  - selenium
+  - beautifulsoup4
+  - simple-db-migrate 

@@ -36,9 +36,10 @@
     owner: "{{ crawler_user_username }}"
     group: "{{ crawler_user_username }}"
 
-- name: Deploy crawler | Install python packages
+- name: Deploy crawler | Install required packages
   shell:
-    cmd: pip3 install selenium beautifulsoup4
+    cmd: "pip3 install {{ item }}"
+  loop: "{{ required_pip_packages }}"
 
 - name: Deploy crawler | Configure cron for crawler
   cron:
