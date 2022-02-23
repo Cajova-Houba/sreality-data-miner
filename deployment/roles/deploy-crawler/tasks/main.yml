@@ -29,6 +29,13 @@
     owner: "{{ crawler_user_username }}"
     group: "{{ crawler_user_username }}"
 
+- name: Deploy crawler | Copy configuration
+  template:
+    src: "config.ini.j2"
+    dest: "{{ crawler_config_file }}"
+    owner: "{{ crawler_user_username }}"
+    group: "{{ crawler_user_username }}"
+
 - name: Deploy crawler | Copy migration scripts
   copy:
     src: "../migration"
@@ -36,10 +43,22 @@
     owner: "{{ crawler_user_username }}"
     group: "{{ crawler_user_username }}"
 
+- name: Deploy crawler | Copy migration configuration
+  template:
+    src: "migration.conf.j2"
+    dest: "{{ migration_config_file }}"
+    owner: "{{ crawler_user_username }}"
+    group: "{{ crawler_user_username }}"
+
+
 - name: Deploy crawler | Install required packages
   shell:
     cmd: "pip3 install {{ item }}"
   loop: "{{ required_pip_packages }}"
+
+- name: Deploy crawler | Migrate DB
+  shell:
+    cmd: "db-migrate --config={{ migration_config_file }}"
 
 - name: Deploy crawler | Configure cron for crawler
   cron:

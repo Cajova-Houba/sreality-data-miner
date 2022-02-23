@@ -8,6 +8,10 @@
   apt:
     name: python3-pip
 
+- name: Install server | Install python DB libs
+  apt:
+    name: libmysqlclient-dev
+
 - name: Install server | Install python packages using pip
   shell:
     cmd: "pip3 install pipenv"

@@ -1,0 +1,23 @@
+SQL_UP = """
+CREATE TABLE IF NOT EXISTS `offer_orig` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `url` varchar(1000) DEFAULT NULL,
+  `sreality_id` varchar(50) DEFAULT NULL,
+  `disposition` varchar(50) DEFAULT NULL,
+  `price` varchar(255) DEFAULT '',
+  `area` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `to_download` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `url` varchar(1000) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+  """
+SQL_DOWN = """
+DROP TABLE offer_orig;
+DROP TABLE to_download;
+"""
