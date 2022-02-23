@@ -19,6 +19,7 @@ class Crawler:
         """
         finalPage = False
         currentPage = 1
+
         while(currentPage <= self.maxSearchPage and not(finalPage)):
             print("Downloading search results, page=%d" % currentPage)
             content = self._downloadPage(self.searchUrl % currentPage)
@@ -37,8 +38,17 @@ class Crawler:
     
     def _saveNewLinks(self, content): 
         newOfferLinks = self.parser.parseSearchPage(content)
-        linksToSave = self.dao.filterExistingLinks(newOfferLinks)
+        existingLinks = self.dao.getAllLinksToDownload()
+        linksToSave = self.dao.filterExistingLinks(newOfferLinks, existingLinks)
         self.dao.saveNewLinks(linksToSave)
+
+    def _filterExistingLinks(self, newOfferLinks, existingLinks):
+        return list(
+            filter(
+                lambda new: not(new in existingLinks), 
+                newOfferLinks
+            )
+        )
 
     def _isFinalSearchPage(self, content):
         """
