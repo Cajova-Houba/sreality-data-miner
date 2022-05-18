@@ -44,7 +44,7 @@ class SRealityDao:
     
     def removeDownloaded(self, id):
         """
-        Remove item that has been downloaded. 
+        Remove url from to_download that has been downloaded. 
         """
         self._createDbContext()
         self.cursor.execute(self.REMOVE_DOWNLOADED_QUERY, (int(id),))

@@ -1,8 +1,8 @@
 ---
-
 crawler_user_home: "/home/{{ crawler_user_username }}"
 crawler_app_dir: "/opt/sreality_crawler"
-crawler_config_file: "{{ crawler_app_dir }}/src/conf.ini"
+crawler_src_dir: "{{ crawler_app_dir }}/src"
+crawler_config_file: "{{ crawler_src_dir }}/conf.ini"
 migration_config_file: "{{ crawler_app_dir }}/migration/migration.conf"
 crawler_migrations_dir: "{{ crawler_app_dir }}/migration"
 required_pip_packages:
@@ -10,3 +10,6 @@ required_pip_packages:
   - beautifulsoup4
   - simple-db-migrate 
   - mysqlclient 
+
+geckodriver_url: "https://github.com/mozilla/geckodriver/releases/download/v0.30.0/geckodriver-v0.30.0-linux64.tar.gz"
+geckodriver_dest: "{{ crawler_app_dir }}/src/geckodriver"

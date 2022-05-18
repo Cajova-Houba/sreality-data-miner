@@ -10,6 +10,11 @@
     group: "{{ crawler_user_username }}"
     home: "{{ crawler_user_home }}"
 
+- name: Deploy crawler | Install required packages
+  shell:
+    cmd: "pip3 install {{ item }}"
+  loop: "{{ required_pip_packages }}"
+
 - name: Deploy crawler | Remove app dir
   file:
     path: "{{ crawler_app_dir }}"
@@ -36,35 +41,22 @@
     owner: "{{ crawler_user_username }}"
     group: "{{ crawler_user_username }}"
 
-- name: Deploy crawler | Copy migration scripts
-  copy:
-    src: "../migration"
-    dest: "{{ crawler_app_dir }}"
+- include: db-migration.yml
+
+- name: Deploy crawler | Download geckodriver
+  unarchive:
+    src: "{{ geckodriver_url }}" 
+    remote_src: yes
+    dest: "{{ crawler_src_dir }}"
     owner: "{{ crawler_user_username }}"
     group: "{{ crawler_user_username }}"
-
-- name: Deploy crawler | Copy migration configuration
-  template:
-    src: "migration.conf.j2"
-    dest: "{{ migration_config_file }}"
-    owner: "{{ crawler_user_username }}"
-    group: "{{ crawler_user_username }}"
-
-
-- name: Deploy crawler | Install required packages
-  shell:
-    cmd: "pip3 install {{ item }}"
-  loop: "{{ required_pip_packages }}"
-
-- name: Deploy crawler | Migrate DB
-  shell:
-    cmd: "db-migrate --config={{ migration_config_file }}"
+    mode: "u+rwx"
 
 - name: Deploy crawler | Configure cron for crawler
   cron:
     name: "Sreality crawler"  
-    minute: "*"
-    hour: "*"
+    minute: "0"
+    hour: "2"
     job: "python3 {{ crawler_app_dir }}/src/main.py"
     user: "{{ crawler_user_username }}"
 

@@ -1,4 +1,5 @@
 from selenium import webdriver 
+from bs4 import BeautifulSoup
 import time
 
 class Crawler:
@@ -27,6 +28,23 @@ class Crawler:
             self._saveNewLinks(content)
             currentPage = currentPage+1
             self._politeWait()
+
+    def processNewOffers(self):
+        """
+        Keep pulling new offer urls from DB, download them, process them and save them to DB.
+        """
+        stop = False
+
+        while not(stop):
+            toDownload = self.dao.selectUrlToDownload()
+            if (not(toDownload is None)):
+                pageContent = self._downloadPage(toDownload['url'])
+                offer = self.parser.parseAdPage(pageContent, toDownload['url'])
+                self.dao.saveDownloadedOffer(offer)
+                self.dao.removeDownloaded(toDownload['id'])
+                self._politeWait()
+            else:
+                stop = True
 
     def _downloadPage(self, url):
         """
