@@ -1,5 +1,5 @@
 DATABASE_HOST = "localhost"
-DATABASE_USER = "{{ mariadb_users[0].name }}"
-DATABASE_PASSWORD = "{{ mariadb_users[0].password }}"
-DATABASE_NAME = "{{ mariadb_databases[0].name }}"
+DATABASE_USER = "{{ mysql_users[0].name }}"
+DATABASE_PASSWORD = "{{ mysql_users[0].password }}"
+DATABASE_NAME = "{{ mysql_databases[0].name }}"
 DATABASE_MIGRATIONS_DIR= "{{ crawler_migrations_dir }}"

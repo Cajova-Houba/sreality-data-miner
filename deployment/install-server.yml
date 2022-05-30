@@ -2,7 +2,6 @@
 - hosts: main
   name: Install server
   become: yes
-  become_method: sudo
   no_log: false
   roles:
     - role: install-server

@@ -11,19 +11,17 @@ ansible_user: ansible
 ansible_user_password: "{{ vault_ansible_user_password }}"
 ansible_become_password: "{{ ansible_user_password }}"
 
-mariadb_databases:
-  - name: sreality
-    collation: utf8_general_ci
-    encoding: utf8
-
-mysql_root_user: "root"
+mysql_root_home: "root"
 mysql_root_password: "{{ vault_root_db_password }}"
-mariadb_users:
+mysql_databases:
   - name: sreality
-    host: localhost
+    encoding: utf8
+    collation: utf8_general_ci
+mysql_users:
+  - name: sreality
+    host: "localhost"
     password: "{{ vault_sreality_db_password }}"
-    priv: [ "sreality.*:ALL" ]
-    state: present
+    priv: "sreality.*:ALL"
 
 crawler_user_username: "sreality_crawler"
 crawler_user_password: "{{ vault_crawler_user_password }}"
