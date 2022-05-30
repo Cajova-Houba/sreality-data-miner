@@ -4,4 +4,6 @@ deployment/pwd_env
 !*.secret
 **geckodriver.log
 **__pycache__
+*.pyc
+*.log
 
